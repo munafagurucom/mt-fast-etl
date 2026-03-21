@@ -1,0 +1,80 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pipeline-core",
+    "crates/pipeline-config",
+    "crates/pipeline-orchestrator",
+    "crates/pipeline-transform",
+    "crates/pipeline-schema",
+    "crates/pipeline-dlq",
+    "crates/pipeline-observe",
+    "crates/pipeline-alert",
+    "crates/pipeline-wasm",
+    "crates/pipeline-serde",
+    "crates/connectors-source",
+    "crates/connectors-sink",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Data Pipeline Team"]
+
+[workspace.dependencies]
+governor = "0.10"
+rdkafka = { version = "0.39", features = ["cmake-build", "tokio"] }
+sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls", "postgres", "mysql", "sqlite"] }
+# Async Runtime
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+# Columnar Data
+arrow = { version = "53", features = ["json"] }
+parquet = { version = "53", features = ["async"] }
+object_store = { version = "0.11", features = ["aws", "gcp", "azure"] }
+
+# Error Handling
+thiserror = "2"
+anyhow = "1"
+
+# Observability
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+axum = "0.7"
+tower = "0.4"
+
+# The binary crate
+[package]
+name = "rust-data-pipeline"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+pipeline-core = { path = "crates/pipeline-core" }
+pipeline-config = { path = "crates/pipeline-config" }
+pipeline-orchestrator = { path = "crates/pipeline-orchestrator" }
+pipeline-transform = { path = "crates/pipeline-transform" }
+pipeline-schema = { path = "crates/pipeline-schema" }
+pipeline-dlq = { path = "crates/pipeline-dlq" }
+pipeline-observe = { path = "crates/pipeline-observe" }
+pipeline-alert = { path = "crates/pipeline-alert" }
+pipeline-serde = { path = "crates/pipeline-serde" }
+connectors-source = { path = "crates/connectors-source" }
+connectors-sink = { path = "crates/connectors-sink" }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+axum = "0.7"
+clap = { version = "4", features = ["derive"] }

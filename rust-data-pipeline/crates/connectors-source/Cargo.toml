@@ -1,0 +1,15 @@
+[package]
+name = "connectors-source"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+pipeline-core = { path = "../pipeline-core" }
+async-trait = { workspace = true }
+tokio = { workspace = true }
+arrow = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+rdkafka = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }

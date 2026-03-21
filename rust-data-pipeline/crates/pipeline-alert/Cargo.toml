@@ -1,0 +1,11 @@
+[package]
+name = "pipeline-alert"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+pipeline-core = { path = "../pipeline-core" }
+async-trait = { workspace = true }
+tokio = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }

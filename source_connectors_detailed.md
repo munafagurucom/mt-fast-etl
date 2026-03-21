@@ -1,0 +1,663 @@
+# Detailed Source Connectors List
+
+Below are the comprehensive lists of source connectors available for each data integration platform.
+
+## 1. RisingWave
+Total Connectors: 19
+
+- Amazon Kinesis
+- Amazon S3
+- Apache Iceberg
+- Apache Kafka
+- Apache Pulsar
+- Azure Blob
+- Datagen
+- Events API
+- Google Cloud Storage
+- Google Pub/Sub
+- MQTT
+- MongoDB CDC
+- MySQL CDC
+- NATS JetStream
+- PostgreSQL CDC
+- Redpanda
+- SQL Server CDC
+- Snowflake
+- Webhook
+
+## 2. Fivetran
+Total Sources Found (Extracted from Documentation Sitemaps): 0
+
+
+## 3. Airbyte
+Total Connectors Found (Extracted from Airbytehq Github): 597
+
+- 100Ms
+- 7Shifts
+- Activecampaign
+- Acuity Scheduling
+- Adjust
+- Adobe Commerce Magento
+- Agilecrm
+- Aha
+- Airbyte
+- Aircall
+- Airtable
+- Akeneo
+- Algolia
+- Alpaca Broker Api
+- Alpha Vantage
+- Amazon Ads
+- Amazon Seller Partner
+- Amazon Sqs
+- Amplitude
+- Apify Dataset
+- Appcues
+- Appfigures
+- Appfollow
+- Apple Search Ads
+- Appsflyer
+- Appstore Singer
+- Apptivo
+- Asana
+- Ashby
+- Assemblyai
+- Auth0
+- Aviationstack
+- Avni
+- Awin Advertiser
+- Aws Cloudtrail
+- Azure Blob Storage
+- Azure Table
+- Babelforce
+- Bamboo Hr
+- Basecamp
+- Beamer
+- Bigcommerce
+- Bigmailer
+- Bigquery
+- Bing Ads
+- Bitly
+- Blogger
+- Bluetally
+- Boldsign
+- Box
+- Box Data Extract
+- Braintree
+- Braze
+- Breezometer
+- Breezy Hr
+- Brevo
+- Brex
+- Bugsnag
+- Buildkite
+- Bunny Inc
+- Buzzsprout
+- Cal Com
+- Calendly
+- Callrail
+- Campaign Monitor
+- Campayn
+- Canny
+- Capsule Crm
+- Captain Data
+- Care Quality Commission
+- Cart
+- Castor Edc
+- Chameleon
+- Chargebee
+- Chargedesk
+- Chargify
+- Chartmogul
+- Chift
+- Churnkey
+- Cimis
+- Cin7
+- Circa
+- Circleci
+- Cisco Meraki
+- Clarif Ai
+- Clazar
+- Clickhouse
+- Clickhouse Strict Encrypt
+- Clickup Api
+- Clockify
+- Clockodo
+- Close Com
+- Cloudbeds
+- Coassemble
+- Cockroachdb
+- Coda
+- Codefresh
+- Coin Api
+- Coingecko Coins
+- Coinmarketcap
+- Commcare
+- Commercetools
+- Concord
+- Configcat
+- Confluence
+- Convertkit
+- Convex
+- Copper
+- Couchbase
+- Countercyclical
+- Courier
+- Criteo Marketing
+- Customer Io
+- Customerly
+- Datadog
+- Datagen
+- Datascope
+- Db2
+- Dbt
+- Defillama
+- Delighted
+- Deputy
+- Ding Connect
+- Dixa
+- Dockerhub
+- Docuseal
+- Dolibarr
+- Dremio
+- Drift
+- Drip
+- Dropbox Sign
+- Dv 360
+- Dwolla
+- Dynamodb
+- E Conomic
+- E2E Test
+- E2E Test Cloud
+- Easypost
+- Easypromos
+- Ebay Finance
+- Ebay Fulfillment
+- Elasticemail
+- Elasticsearch
+- Emailoctopus
+- Employment Hero
+- Encharge
+- Eventbrite
+- Eventee
+- Eventzilla
+- Everhour
+- Exchange Rates
+- Ezofficeinventory
+- Facebook Marketing
+- Facebook Pages
+- Factorial
+- Faker
+- Fastbill
+- Fastly
+- Fauna
+- Feishu
+- File
+- Fillout
+- Finage
+- Financial Modelling
+- Finnhub
+- Finnworlds
+- Firebase Realtime Database
+- Firebolt
+- Firehydrant
+- Fleetio
+- Flexmail
+- Flexport
+- Float
+- Flowlu
+- Formbricks
+- Free Agent Connector
+- Freightview
+- Freshbooks
+- Freshcaller
+- Freshchat
+- Freshdesk
+- Freshsales
+- Freshservice
+- Front
+- Fulcrum
+- Fullstory
+- Gainsight Px
+- Gcs
+- Genesys
+- Getgist
+- Getlago
+- Giphy
+- Gitbook
+- Github
+- Gitlab
+- Glassfrog
+- Gmail
+- Gnews
+- Gocardless
+- Goldcast
+- Gologin
+- Gong
+- Google Ads
+- Google Analytics Data Api
+- Google Analytics V4
+- Google Analytics V4 Service Account Only
+- Google Calendar
+- Google Classroom
+- Google Directory
+- Google Drive
+- Google Forms
+- Google Pagespeed Insights
+- Google Search Console
+- Google Sheets
+- Google Tasks
+- Google Webfonts
+- Google Workspace Admin Reports
+- Gorgias
+- Grafana
+- Granola
+- Greenhouse
+- Greythr
+- Gridly
+- Guru
+- Gutendex
+- Hardcoded Records
+- Harness
+- Harvest
+- Height
+- Hellobaton
+- Help Scout
+- Hibob
+- High Level
+- Hoorayhr
+- Hubplanner
+- Hubspot
+- Hugging Face Datasets
+- Humanitix
+- Huntr
+- Illumina Basespace
+- Imagga
+- Incident Io
+- Inflowinventory
+- Insightful
+- Insightly
+- Instagram
+- Instatus
+- Intercom
+- Intruder
+- Invoiced
+- Invoiceninja
+- Ip2Whois
+- Iterable
+- Jamf Pro
+- Jina Ai Reader
+- Jira
+- Jobnimbus
+- Jotform
+- Judge Me Reviews
+- Just Sift
+- Justcall
+- K6 Cloud
+- Kafka
+- Katana
+- Keka
+- Kisi
+- Kissmetrics
+- Klarna
+- Klaus Api
+- Klaviyo
+- Kustomer Singer
+- Kyriba
+- Kyve
+- Launchdarkly
+- Leadfeeder
+- Lemlist
+- Less Annoying Crm
+- Lever Hiring
+- Lightspeed Retail
+- Linear
+- Linkedin Ads
+- Linkedin Pages
+- Linkrunner
+- Linnworks
+- Lob
+- Lokalise
+- Looker
+- Luma
+- Mailchimp
+- Mailerlite
+- Mailersend
+- Mailgun
+- Mailjet Mail
+- Mailjet Sms
+- Mailosaur
+- Mailtrap
+- Mantle
+- Marketo
+- Marketstack
+- Mendeley
+- Mention
+- Mercado Ads
+- Merge
+- Metabase
+- Metricool
+- Microsoft Dataverse
+- Microsoft Entra Id
+- Microsoft Lists
+- Microsoft Onedrive
+- Microsoft Sharepoint
+- Microsoft Teams
+- Miro
+- Missive
+- Mixmax
+- Mixpanel
+- Mode
+- Monday
+- Mongodb V2
+- Mssql
+- Mux
+- My Hours
+- Mysql
+- N8N
+- Nasa
+- Navan
+- Nebius Ai
+- Netsuite
+- News Api
+- Newsdata
+- Newsdata Io
+- Nexiopay
+- Nexus Datasets
+- Ninjaone Rmm
+- Nocrm
+- Northpass Lms
+- Notion
+- Nutshell
+- Nylas
+- Nytimes
+- Okta
+- Omnisend
+- Oncehub
+- Onepagecrm
+- Onesignal
+- Onfleet
+- Open Data Dc
+- Open Exchange Rates
+- Openaq
+- Openfda
+- Openweather
+- Opinion Stage
+- Opsgenie
+- Opuswatch
+- Oracle
+- Oracle Strict Encrypt
+- Orb
+- Oura
+- Outbrain Amplify
+- Outlook
+- Outreach
+- Oveit
+- Pabbly Subscriptions Billing
+- Paddle
+- Pagerduty
+- Pandadoc
+- Paperform
+- Papersign
+- Pardot
+- Partnerize
+- Partnerstack
+- Payfit
+- Paypal Transaction
+- Paystack
+- Pendo
+- Pennylane
+- Perigon
+- Persistiq
+- Persona
+- Pexels Api
+- Phyllo
+- Picqer
+- Pingdom
+- Pinterest
+- Pipedrive
+- Pipeliner
+- Pivotal Tracker
+- Piwik
+- Plaid
+- Planhat
+- Plausible
+- Pocket
+- Pokeapi
+- Polygon Stock Api
+- Poplar
+- Postgres
+- Posthog
+- Postmarkapp
+- Prestashop
+- Pretix
+- Primetric
+- Printify
+- Productboard
+- Productive
+- Public Apis
+- Punk Api
+- Pylon
+- Pypi
+- Python Http Tutorial
+- Qonto
+- Qualaroo
+- Quickbooks
+- Railz
+- Rd Station Marketing
+- Recharge
+- Recreation
+- Recruitee
+- Recurly
+- Reddit
+- Redshift
+- Referralhero
+- Rentcast
+- Repairshopr
+- Reply Io
+- Retailexpress By Maropost
+- Retently
+- Revenuecat
+- Revolut Merchant
+- Ringcentral
+- Rki Covid
+- Rocket Chat
+- Rocketlane
+- Rollbar
+- Rootly
+- Rss
+- Ruddr
+- S3
+- Safetyculture
+- Sage Hr
+- Salesflare
+- Salesforce
+- Salesloft
+- Sap Fieldglass
+- Savvycal
+- Scaffold Java Jdbc
+- Scryfall
+- Search Metrics
+- Secoda
+- Segment
+- Sendgrid
+- Sendinblue
+- Sendowl
+- Sendpulse
+- Senseforce
+- Sentry
+- Serpstat
+- Sftp
+- Sftp Bulk
+- Sharetribe
+- Shippo
+- Shipstation
+- Shopify
+- Shopwired
+- Shortcut
+- Shortio
+- Shutterstock
+- Sigma Computing
+- Signnow
+- Simfin
+- Simplecast
+- Simplesat
+- Singlestore
+- Slack
+- Smaily
+- Smartengage
+- Smartreach
+- Smartsheets
+- Smartwaiver
+- Smoke Test
+- Snapchat Marketing
+- Snowflake
+- Solarwinds Service Desk
+- Sonar Cloud
+- Spacex Api
+- Sparkpost
+- Split Io
+- Spotify Ads
+- Spotlercrm
+- Square
+- Squarespace
+- Statsig
+- Statuspage
+- Stigg
+- Stock Ticker Api Tutorial
+- Stockdata
+- Strava
+- Stripe
+- Survey Sparrow
+- Surveycto
+- Surveymonkey
+- Survicate
+- Svix
+- Systeme
+- Taboola
+- Talkdesk Explore
+- Tavus
+- Teamtailor
+- Teamwork
+- Tempo
+- Teradata
+- Testrail
+- The Guardian Api
+- Thinkific
+- Thinkific Courses
+- Thrive Learning
+- Ticketmaster
+- Tickettailor
+- Ticktick
+- Tidb
+- Tiktok Marketing
+- Timely
+- Tinyemail
+- Tmdb
+- Todoist
+- Toggl
+- Tplcentral
+- Track Pms
+- Trello
+- Tremendous
+- Trustpilot
+- Tvmaze Schedule
+- Twelve Data
+- Twilio
+- Twilio Taskrouter
+- Twitter
+- Tyntec Sms
+- Typeform
+- Ubidots
+- Unleash
+- Uppromote
+- Uptick
+- Us Census
+- Uservoice
+- Vantage
+- Veeqo
+- Vercel
+- Visma Economic
+- Vitally
+- Vwo
+- Waiteraid
+- Wasabi Stats Api
+- Watchmode
+- Weatherstack
+- Web Scrapper
+- Webflow
+- When I Work
+- Whisky Hunter
+- Wikipedia Pageviews
+- Woocommerce
+- Wordpress
+- Workable
+- Workflowmax
+- Workramp
+- Wrike
+- Wufoo
+- Xero
+- Xkcd
+- Xsolla
+- Yahoo Finance Price
+- Yandex Metrica
+- Yotpo
+- You Need A Budget Ynab
+- Younium
+- Yousign
+- Youtube Analytics
+- Youtube Data
+- Zapier Supported Storage
+- Zapsign
+- Zendesk Chat
+- Zendesk Sell
+- Zendesk Sunshine
+- Zendesk Support
+- Zendesk Talk
+- Zenefits
+- Zenloop
+- Zoho Analytics Metadata Api
+- Zoho Bigin
+- Zoho Billing
+- Zoho Books
+- Zoho Campaign
+- Zoho Crm
+- Zoho Desk
+- Zoho Expense
+- Zoho Inventory
+- Zoho Invoice
+- Zonka Feedback
+- Zoom
+- Zuora
+
+## 4. Confluent (Kafka Connect)
+Total Connectors Found (Extracted from Confluent Hub plugins): 14
+
+- File Chunk Source (Streamsend)
+- Kafka Connect Aerospike Source (Aerospike, Inc.)
+- Kafka Connect Azure Blob Storage Source (Confluent, Inc.)
+- Kafka Connect Http Source (Confluent, Inc.)
+- Kafka Connect Odpsapsource (Rahul Bhattacharya)
+- Kafka Connect Oracle Xstream Cdc Source (Confluent, Inc.)
+- Kafka Connect S3 Source (Confluent, Inc.)
+- Kafka Connect Solace Source (Confluent, Inc.)
+- Oracledatabasesource (Confluent, Inc.)
+- S4Hana Source Connector (Rtdi.Io Gmbh)
+- Salesforceplatformeventsource (Confluent, Inc.)
+- Scylla Cdc Source Connector (Scylladb)
+- Snowflakesource (Confluent, Inc.)
+- Yugabytedb Source Connector (Yugabyte Inc.)
+
+## 5. Hevo Data
+Total Connectors Found (Extracted from Hevo Documentation): 9
+
+- Dbfs
+- Engg Analytics
+- Fna Analytics
+- Free Sources
+- Mkt Analytics
+- Prod Analytics
+- Sns Analytics
+- Source Faqs
+- Sources
+

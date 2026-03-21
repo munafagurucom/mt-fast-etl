@@ -1,0 +1,11 @@
+/home/mt/Desktop/AutoAnswerApp/rust-data-pipeline/target/debug/deps/arrow_schema-aa130b942eaa3f8e.d: /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/lib.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype_parse.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/error.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/field.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/fields.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/schema.rs
+
+/home/mt/Desktop/AutoAnswerApp/rust-data-pipeline/target/debug/deps/libarrow_schema-aa130b942eaa3f8e.rmeta: /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/lib.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype_parse.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/error.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/field.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/fields.rs /home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/schema.rs
+
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/lib.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/datatype_parse.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/error.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/field.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/fields.rs:
+/home/mt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arrow-schema-53.4.1/src/schema.rs:

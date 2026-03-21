@@ -1,0 +1,9 @@
+[package]
+name = "pipeline-observe"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+pipeline-core = { path = "../pipeline-core" }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
