@@ -5,7 +5,6 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use arrow::json::LineWriter;
 use arrow::record_batch::RecordBatch;
 use chrono::{DateTime, Utc};
 use object_store::{ObjectStore, path::Path, PutPayload};
@@ -239,7 +238,8 @@ impl DlqWriter {
         }
 
         let ndjson_content = json_lines.join("\n") + "\n";
-        let payload = PutPayload::from_bytes(ndjson_content.as_bytes());
+        let size_bytes = ndjson_content.len();
+        let payload = PutPayload::from(ndjson_content.into_bytes());
 
         // Write to object storage
         self.store.put(&object_path, payload).await
@@ -252,7 +252,7 @@ impl DlqWriter {
         info!(
             object_path = %object_path,
             records_count = json_lines.len(),
-            size_bytes = ndjson_content.len(),
+            size_bytes = size_bytes,
             "DLQ batch written to storage"
         );
 
@@ -283,14 +283,14 @@ async fn create_object_store(uri: &str) -> Result<Box<dyn ObjectStore>, Pipeline
     if uri.starts_with("s3://") {
         // Parse S3 URI
         let path = Path::from(uri.strip_prefix("s3://").unwrap());
-        let bucket_name = path.parts().first()
+        let bucket_name = path.parts().next()
             .ok_or_else(|| PipelineError::ConfigError {
                 message: "Invalid S3 URI: missing bucket name".to_string(),
             })?;
 
         // Create S3 client
         let s3_config = object_store::aws::AmazonS3Builder::from_env()
-            .with_bucket_name(bucket_name)
+            .with_bucket_name(bucket_name.as_ref().to_string())
             .build()
             .map_err(|e| PipelineError::ConnectionFailed {
                 connector: "s3".to_string(),
@@ -301,14 +301,14 @@ async fn create_object_store(uri: &str) -> Result<Box<dyn ObjectStore>, Pipeline
     } else if uri.starts_with("gs://") {
         // Parse GCS URI
         let path = Path::from(uri.strip_prefix("gs://").unwrap());
-        let bucket_name = path.parts().first()
+        let bucket_name = path.parts().next()
             .ok_or_else(|| PipelineError::ConfigError {
                 message: "Invalid GCS URI: missing bucket name".to_string(),
             })?;
 
         // Create GCS client
         let gcs_config = object_store::gcp::GoogleCloudStorageBuilder::from_env()
-            .with_bucket_name(bucket_name)
+            .with_bucket_name(bucket_name.as_ref().to_string())
             .build()
             .map_err(|e| PipelineError::ConnectionFailed {
                 connector: "gcs".to_string(),

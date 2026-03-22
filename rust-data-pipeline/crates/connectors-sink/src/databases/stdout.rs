@@ -3,7 +3,7 @@
 
 use std::time::Instant;
 use arrow::record_batch::RecordBatch;
-use arrow::json::LineWriter;
+use arrow::json::LineDelimitedWriter as LineWriter;
 use async_trait::async_trait;
 
 use pipeline_core::error::PipelineError;

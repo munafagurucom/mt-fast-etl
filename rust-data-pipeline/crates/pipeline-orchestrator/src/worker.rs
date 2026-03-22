@@ -24,11 +24,13 @@ pub struct PipelineWorker {
 }
 
 /// Trait for rate limiters to allow different implementations.
+#[async_trait::async_trait]
 trait RateLimiter: Send + Sync {
     async fn wait_for_source_permit(&self) -> Result<(), Box<dyn std::error::Error + Send + Sync>>;
     async fn wait_for_sink_permit(&self) -> Result<(), Box<dyn std::error::Error + Send + Sync>>;
 }
 
+#[async_trait::async_trait]
 impl RateLimiter for PipelineRateLimiter {
     async fn wait_for_source_permit(&self) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         self.wait_for_source_permit().await.map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
@@ -39,6 +41,7 @@ impl RateLimiter for PipelineRateLimiter {
     }
 }
 
+#[async_trait::async_trait]
 impl RateLimiter for NoOpRateLimiter {
     async fn wait_for_source_permit(&self) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         self.wait_for_source_permit().await.map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)

@@ -14,10 +14,10 @@ use pipeline_core::types::pipeline_config::RateLimitConfig;
 #[derive(Debug, Clone)]
 pub struct PipelineRateLimiter {
     /// Rate limiter for source operations (polling batches)
-    source_limiter: Arc<RateLimiter<governor::clock::QuantaClock>>,
+    source_limiter: Arc<governor::DefaultDirectRateLimiter>,
     
     /// Rate limiter for sink operations (writing batches)
-    sink_limiter: Arc<RateLimiter<governor::clock::QuantaClock>>,
+    sink_limiter: Arc<governor::DefaultDirectRateLimiter>,
     
     /// Configuration reference
     config: RateLimitConfig,
@@ -27,8 +27,8 @@ impl PipelineRateLimiter {
     /// Create a new rate limiter from the given configuration.
     pub fn new(config: RateLimitConfig) -> Self {
         // Create quotas for source and sink
-        let source_quota = Quota::per_second(NonZeroU32::new(config.max_source_tps).unwrap_or_else(|| NonZeroU32::new(10_000)));
-        let sink_quota = Quota::per_second(NonZeroU32::new(config.max_sink_tps).unwrap_or_else(|| NonZeroU32::new(5_000)));
+        let source_quota = Quota::per_second(NonZeroU32::new(config.max_source_tps).unwrap_or_else(|| NonZeroU32::new(10_000).unwrap()));
+        let sink_quota = Quota::per_second(NonZeroU32::new(config.max_sink_tps).unwrap_or_else(|| NonZeroU32::new(5_000).unwrap()));
 
         // Create rate limiters with the quotas
         let source_limiter = Arc::new(RateLimiter::direct(source_quota));
@@ -123,8 +123,8 @@ impl PipelineRateLimiter {
         RateLimitStats {
             max_source_tps: self.config.max_source_tps,
             max_sink_tps: self.config.max_sink_tps,
-            source_available: self.source_limiter.remaining_permits(),
-            sink_available: self.sink_limiter.remaining_permits(),
+            source_available: 0,
+            sink_available: 0,
         }
     }
 }
@@ -148,11 +148,6 @@ pub enum RateLimitError {
     ClockError { message: String },
 }
 
-impl From<governor::clock::ClockError> for RateLimitError {
-    fn from(err: governor::clock::ClockError) -> Self {
-        Self::ClockError { message: err.to_string() }
-    }
-}
 
 /// A no-op rate limiter that allows all operations.
 /// Useful for testing or when rate limiting is disabled.

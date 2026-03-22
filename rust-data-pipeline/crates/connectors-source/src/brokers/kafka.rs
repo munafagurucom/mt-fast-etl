@@ -11,7 +11,8 @@ use arrow::record_batch::RecordBatch;
 use async_trait::async_trait;
 use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{Consumer, StreamConsumer, CommitMode};
-use rdkafka::message::BorrowedMessage;
+use rdkafka::message::{BorrowedMessage, OwnedMessage, Header, Headers};
+use rdkafka::{Message, Offset};
 use rdkafka::topic_partition_list::TopicPartitionList;
 use serde_json::Value;
 use tokio::time::timeout;
@@ -47,11 +48,12 @@ impl TryFrom<&ConnectorConfig> for KafkaSourceConfig {
         
         Ok(KafkaSourceConfig {
             bootstrap_servers: properties.get("bootstrap_servers")
+                .and_then(|v| v.as_str()).map(String::from)
                 .ok_or_else(|| PipelineError::ConfigError {
                     message: "Missing required property: bootstrap_servers".to_string(),
-                })?
-                .clone(),
+                })?,
             topics: properties.get("topics")
+                .and_then(|v| v.as_str()).map(String::from)
                 .ok_or_else(|| PipelineError::ConfigError {
                     message: "Missing required property: topics".to_string(),
                 })?
@@ -59,25 +61,25 @@ impl TryFrom<&ConnectorConfig> for KafkaSourceConfig {
                 .map(|s| s.trim().to_string())
                 .collect(),
             group_id: properties.get("group_id")
-                .cloned()
+                .and_then(|v| v.as_str()).map(String::from)
                 .unwrap_or_else(|| "rust-data-pipeline".to_string()),
             client_id: properties.get("client_id")
-                .cloned()
+                .and_then(|v| v.as_str()).map(String::from)
                 .unwrap_or_else(|| "rust-data-pipeline-source".to_string()),
             auto_offset_reset: properties.get("auto_offset_reset")
-                .cloned()
+                .and_then(|v| v.as_str()).map(String::from)
                 .unwrap_or_else(|| "latest".to_string()),
             enable_auto_commit: properties.get("enable_auto_commit")
-                .and_then(|v| v.parse().ok())
+                .and_then(|v| v.as_bool())
                 .unwrap_or(false),
             batch_size: properties.get("batch_size")
-                .and_then(|v| v.parse().ok())
+                .and_then(|v| v.as_u64()).map(|v| v as usize)
                 .unwrap_or(100),
             poll_timeout_ms: properties.get("poll_timeout_ms")
-                .and_then(|v| v.parse().ok())
+                .and_then(|v| v.as_u64())
                 .unwrap_or(1000),
-            security_protocol: properties.get("security_protocol").cloned(),
-            sasl_mechanism: properties.get("sasl_mechanism").cloned(),
+            security_protocol: properties.get("security_protocol").and_then(|v| v.as_str()).map(String::from),
+            sasl_mechanism: properties.get("sasl_mechanism").and_then(|v| v.as_str()).map(String::from),
             sasl_username: config.secrets.get("sasl_username").cloned(),
             sasl_password: config.secrets.get("sasl_password").cloned(),
         })
@@ -140,7 +142,7 @@ impl KafkaSource {
         Ok(consumer)
     }
 
-    fn parse_json_to_arrow(&self, messages: Vec<&BorrowedMessage>) -> Result<RecordBatch, PipelineError> {
+    fn parse_json_to_arrow(&mut self, messages: Vec<&OwnedMessage>) -> Result<RecordBatch, PipelineError> {
         if messages.is_empty() {
             let schema = Arc::new(Schema::new(vec![
                 Field::new("topic", DataType::Utf8, false),
@@ -168,8 +170,7 @@ impl KafkaSource {
             offsets.push(msg.offset());
             
             // Convert timestamp to milliseconds
-            let timestamp = msg.timestamp()
-                .map(|ts| ts.to_millis())
+            let timestamp = msg.timestamp().to_millis()
                 .unwrap_or_else(|| chrono::Utc::now().timestamp_millis());
             timestamps.push(timestamp);
 
@@ -186,12 +187,13 @@ impl KafkaSource {
             values.push(value);
 
             // Handle headers
-            let headers_str = if msg.headers().is_some() {
-                let headers_map: HashMap<String, String> = msg.headers()
-                    .unwrap()
-                    .iter()
-                    .map(|(key, value)| (key.to_string(), String::from_utf8_lossy(value).to_string()))
-                    .collect();
+            let headers_str = if let Some(headers) = msg.headers() {
+                let mut headers_map: HashMap<String, String> = HashMap::new();
+                for i in 0..headers.count() {
+                    let header = headers.get(i);
+                    let value = header.value.map(|v| String::from_utf8_lossy(v).to_string()).unwrap_or_default();
+                    headers_map.insert(header.key.to_string(), value);
+                }
                 serde_json::to_string(&headers_map).unwrap_or_else(|_| "{}".to_string())
             } else {
                 "{}".to_string()
@@ -271,13 +273,12 @@ impl SourceConnector for KafkaSource {
         // Poll for messages with timeout
         match timeout(poll_duration, async {
             for _ in 0..self.config.batch_size {
-                match consumer.poll().await {
-                    Some(Ok(msg)) => messages.push(msg),
-                    Some(Err(e)) => {
+                match consumer.recv().await {
+                    Ok(msg) => messages.push(msg.detach()),
+                    Err(e) => {
                         warn!(error = %e, "Kafka poll error, continuing");
                         continue;
                     }
-                    None => break, // No more messages available
                 }
             }
         }).await {
@@ -303,7 +304,7 @@ impl SourceConnector for KafkaSource {
         }
 
         // Convert messages to Arrow RecordBatch
-        let borrowed_messages: Vec<&BorrowedMessage> = messages.iter().collect();
+        let borrowed_messages: Vec<&OwnedMessage> = messages.iter().collect();
         let batch = self.parse_json_to_arrow(borrowed_messages)?;
 
         // Store message references for potential acknowledgment
@@ -321,16 +322,17 @@ impl SourceConnector for KafkaSource {
 
         // Parse checkpoint to get offset information
         // Checkpoint format: "partition1:offset1,partition2:offset2"
-        if let Some(offset_data) = checkpoint.offset.get("kafka_offsets") {
+        if !checkpoint.offset.is_empty() {
+            let offset_data_str = &checkpoint.offset;
             let mut tpl = TopicPartitionList::new();
             
-            for pair in offset_data.split(',') {
+            for pair in offset_data_str.split(',') {
                 let parts: Vec<&str> = pair.split(':').collect();
                 if parts.len() == 2 {
                     if let (Ok(partition), Ok(offset)) = (parts[0].parse::<i32>(), parts[1].parse::<i64>()) {
                         // For each topic we're subscribed to, add the partition+offset
                         for topic in &self.config.topics {
-                            tpl.add_partition_offset(topic, partition, offset + 1); // +1 for next message
+                            tpl.add_partition_offset(topic, partition, Offset::Offset(offset + 1)); // +1 for next message
                         }
                     }
                 }
@@ -340,7 +342,7 @@ impl SourceConnector for KafkaSource {
                 consumer.commit(&tpl, CommitMode::Sync)
                     .map_err(|e| PipelineError::Internal(format!("Failed to commit Kafka offsets: {}", e)))?;
                 
-                info!(offsets = ?offset_data, "Committed Kafka offsets");
+                info!(offsets = ?offset_data_str, "Committed Kafka offsets");
             }
         }
 

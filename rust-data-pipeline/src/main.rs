@@ -105,8 +105,9 @@ async fn main() -> anyhow::Result<()> {
         info!("Starting control plane API on port {}...", cli.api_port);
         
         // Start the control plane server
+        let engine_clone = engine.clone();
         let server_handle = tokio::spawn(async move {
-            if let Err(e) = start_server(engine, cli.api_port).await {
+            if let Err(e) = start_server(engine_clone, cli.api_port).await {
                 error!("Control plane server failed: {}", e);
             }
         });

@@ -133,12 +133,12 @@ async fn list_pipelines(
                 PipelineStatus::Running => "running".to_string(),
                 PipelineStatus::Paused => "paused".to_string(),
                 PipelineStatus::Stopped => "stopped".to_string(),
-                PipelineStatus::Failed(msg) => format!("failed: {}", msg),
+                PipelineStatus::Failed(ref msg) => format!("failed: {}", msg),
             },
             uptime_seconds: None, // TODO: Track uptime in engine
             records_processed: None, // TODO: Track records in engine
             last_error: match status {
-                PipelineStatus::Failed(msg) => Some(msg),
+                PipelineStatus::Failed(msg) => Some(msg.clone()),
                 _ => None,
             },
         };
@@ -176,12 +176,12 @@ async fn get_pipeline(
                     PipelineStatus::Running => "running".to_string(),
                     PipelineStatus::Paused => "paused".to_string(),
                     PipelineStatus::Stopped => "stopped".to_string(),
-                    PipelineStatus::Failed(msg) => format!("failed: {}", msg),
+                    PipelineStatus::Failed(ref msg) => format!("failed: {}", msg),
                 },
                 uptime_seconds: None,
                 records_processed: None,
                 last_error: match status {
-                    PipelineStatus::Failed(msg) => Some(msg),
+                    PipelineStatus::Failed(msg) => Some(msg.clone()),
                     _ => None,
                 },
             };
@@ -242,7 +242,7 @@ async fn create_pipeline(
         })?;
 
     let status_response = PipelineStatusResponse {
-        pipeline_id: request.pipeline_id,
+        pipeline_id: request.pipeline_id.clone(),
         status: "starting".to_string(),
         uptime_seconds: None,
         records_processed: None,
@@ -288,7 +288,7 @@ async fn get_metrics(State(state): State<ApiState>) -> Json<ApiResponse<HashMap<
 
     // Count pipelines by status
     let mut status_counts = HashMap::new();
-    for (_, status) in pipelines {
+    for (_, status) in &pipelines {
         let status_str = match status {
             PipelineStatus::Starting => "starting",
             PipelineStatus::Running => "running",
@@ -311,7 +311,7 @@ async fn get_config_schemas() -> Json<ApiResponse<HashMap<String, serde_json::Va
     let mut schemas = HashMap::new();
 
     // Source connector schemas
-    let mut source_schema = serde_json::json!({
+    let source_schema = serde_json::json!({
         "type": "object",
         "properties": {
             "type": {
@@ -331,7 +331,7 @@ async fn get_config_schemas() -> Json<ApiResponse<HashMap<String, serde_json::Va
     });
 
     // Sink connector schemas
-    let mut sink_schema = serde_json::json!({
+    let sink_schema = serde_json::json!({
         "type": "object",
         "properties": {
             "type": {
